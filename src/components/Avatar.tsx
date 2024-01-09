@@ -193,7 +193,6 @@ export function Avatar (props: JSX.IntrinsicElements["group"]) {
           if (status.isLoaded){
             status.progressUpdateIntervalMillis = 10
             currentAudioTime = Number((status.positionMillis/1000).toPrecision(2))
-            console.log("currentAudioTime",currentAudioTime);
             for (let i = 0; i < lipsync.mouthCues.length; i++) {
               const mouthCue = lipsync.mouthCues[i];
               if (
