@@ -169,7 +169,8 @@ export function Torso(props: JSX.IntrinsicElements["group"]) {
       nodes.EyeLeft.morphTargetDictionary &&
       Object.keys(mapping).forEach((key) => {
         if (key in mapping) {
-          let currentMap: number = mapping[key] as number;
+          let mappingKey = key as keyof ExpressionType;
+          let currentMap: number = mapping[mappingKey] as number;
           if (key === "eyeBlinkLeft" || key === "eyeBlinkRight") {
             return; // eyes wink/blink are handled separately
           }

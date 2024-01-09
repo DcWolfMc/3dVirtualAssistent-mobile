@@ -23,10 +23,10 @@ export const AssistScreen = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [input, setInput] = useState<string>("");
   const { chat, message, loadingChat } = useChat();
-  
+  const disableSendButton = loadingChat || loading || message === "";
   const sendMessage = () => {
-      chat(input);
-      setInput("");
+    chat(input);
+    setInput("");
   };
   return (
     <SafeAreaView className="flex-1 bg-slate-900">
@@ -65,8 +65,12 @@ export const AssistScreen = () => {
             value={input}
           />
           <TouchableOpacity
-            disabled={(loadingChat || loading || message === "")}
-            className={` bg-pink-500 text-white p-4 px-16 font-semibold uppercase rounded-md disabled:bg-pink-500/50`}
+            disabled={disableSendButton}
+            className={
+              !disableSendButton
+                ? ` bg-pink-500 text-white p-4 px-16 font-semibold uppercase rounded-md`
+                : `bg-pink-500/50 text-white p-4 px-16 font-semibold uppercase rounded-md`
+            }
             onPress={() => sendMessage()}
           >
             <Text className="color-gray-200">Send</Text>

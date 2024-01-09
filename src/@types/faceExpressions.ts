@@ -170,6 +170,7 @@ export type ExpressionType = OptionalExpressions[keyof OptionalExpressions];
 type ExpressionKeys = keyof ExpressionType;
 
 type ExpressionKeyStrings = `${ExpressionKeys}`;
+
 export type ExpressionsKeyManual =
   | "browDownLeft"
   | "browDownRight"
