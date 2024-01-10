@@ -24,8 +24,7 @@ export const AssistScreen = () => {
   const { chat, message, loadingChat } = useChat();
   const disableSendButton = loadingChat || loading || message === "" || input==="";
   const disableSpeakButton = loadingChat || loading;
-  console.log("disableSendButton", disableSendButton);
-
+  
   const sendMessage = () => {
     chat(input);
     setInput("");

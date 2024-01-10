@@ -14,6 +14,12 @@ import { useChat } from "../hooks/useChat";
 import { GLTF } from "three-stdlib";
 import { facialExpressions, ExpressionType, FacialExpressionsType, LipsyncDataType, CorrespondingType, CorrespondingKeys } from "../@types/faceExpressions";
 import { Audio } from 'expo-av';
+import { Platform } from "react-native";
+import {
+  cacheDirectory,
+  writeAsStringAsync,
+  EncodingType
+} from 'expo-file-system';
 type GLTFResult = GLTF & {
   nodes: {
     EyeLeft: THREE.SkinnedMesh;
@@ -98,20 +104,41 @@ export function Avatar (props: JSX.IntrinsicElements["group"]) {
     //console.log("message.lipsync",message.lipsync);
     setLipsync(message.lipsync);
     const playAudio = async () => {
-      try {
-        const { sound } = await Audio.Sound.createAsync(
-          { uri: "data:audio/mp3;base64," + message.audio }
-        );
-        setAudio(sound);
-        await sound.playAsync().then((status)=>{
+      if(Platform.OS === "android"){
+        try {
+          const { sound } = await Audio.Sound.createAsync(
+            { uri: "data:audio/mp3;base64," + message.audio }
+          );
+          setAudio(sound);
+          await sound.playAsync().then((status)=>{
+          });
+          sound.setOnPlaybackStatusUpdate((status) => {
+            if (status.isLoaded) {
+              status.didJustFinish&&onMessagePlayed();
+            }
+          });
+        } catch (error) {
+          console.error('Erro ao reproduzir o áudio:', error);
+        }
+      }else{
+        try {
+
+        const tmpFilename = `${cacheDirectory}speech.wav`;
+        await writeAsStringAsync(tmpFilename, message.audio, {
+          encoding: EncodingType.Base64
         });
-        sound.setOnPlaybackStatusUpdate((status) => {
-          if (status.isLoaded) {
-            status.didJustFinish&&onMessagePlayed();
-          }
-        });
-      } catch (error) {
-        console.error('Erro ao reproduzir o áudio:', error);
+        const { sound } = await Audio.Sound.createAsync({ uri: tmpFilename });
+          setAudio(sound);
+          await sound.playAsync().then((status)=>{
+          });
+          sound.setOnPlaybackStatusUpdate((status) => {
+            if (status.isLoaded) {
+              status.didJustFinish&&onMessagePlayed();
+            }
+          });
+        } catch (error) {
+          console.error('Erro ao reproduzir o áudio: no IOS', error);
+        }
       }
     };
     playAudio();
