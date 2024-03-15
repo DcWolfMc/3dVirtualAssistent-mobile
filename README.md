@@ -48,9 +48,9 @@ npm start
 - `Hide/Show UI`: 👁️ Button to change the UI display. 
 
 ## Screenshots
-<p>
-  <img src="./screenshot1.png" alt="screenshot1" width="360" hspace="32"/>
-  <img src="./screenshot2.png" alt="screenshot1" width="360" hspace="32"/>
+<p width="100%">
+  <img src="./screenshot1.png" alt="screenshot1" width="40%" hspace="32"/>
+  <img src="./screenshot2.png" alt="screenshot1" width="40%" hspace="32"/>
 </p>
 
 ## Technologies Used
