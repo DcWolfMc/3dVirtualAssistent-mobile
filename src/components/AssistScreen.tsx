@@ -14,7 +14,6 @@ import Trigger from "./Trigger";
 import { Avatar } from "./Avatar";
 import { useChat } from "../hooks/useChat";
 import { Feather } from "@expo/vector-icons";
-// import { Loader } from "@react-three/drei";
 
 export const AssistScreen = () => {
   // const [OrbitControls, events] = useControls();
